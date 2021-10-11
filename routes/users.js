@@ -1,53 +1,76 @@
+const auth = require('../middlewares/auth')
 const express = require('express');
 const router = express.Router();
-const { User, validate} = require('../models/user')
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+const { User, validate, validateLogin} = require('../models/user')
 
-router.get('/' , async (req, res) => {
-    const users = await User.find().sort('name');
-    res.send(users);
-})
+router.post('/signup' ,auth, async (req, res) => {
+    
+    //console.log(req.body)
+    
+    
+    try {
 
-router.get('/:id' , async (req, res) => {
+        const { error } = validate(req.body); 
+        if (error) return res.status(400).send(error.details[0].message);
 
-   const user = await User.findById(req.params.id);
-   if(!user) return res.status(404).send('User not found')
-   else res.send(user);
-})
-
-router.post('/', async (req, res) => {
+        let user = await User.findOne({ email: req.body.email });
+        if (user) return res.status(400).send('User already registered.');
+        const name = req.body.name
+        const email = req.body.email
+        const password = await bcrypt.hash(req.body.password, 10) 
+        user = await User.create({
+            name,
+            email ,
+            password
+        })
+        console.log('User created: ' ,user)
+        res.status(200).send()
+    } catch (error) {
+        console.log(error)
+        return res.status(400).send("Bad req")
         
-     const {error} = validate(req.body)
-     if(error) return res.status(400).send(error.details[0].message);
-
-    let user = new User ({
-        name: req.body.name 
-    });
-    user = await user.save()
-    res.send(user);
-});
-
-router.put('/:id', async (req, res) => {
-
-    const {error} = validate(req.body)
-    if(error) return res.status(400).send(error.details[0].message);
-
-    const user = await User.findByIdAndUpdate(req.params.id, { name: req.body.name}, {
-        new: true
-    });
+    }
     
-    if(!user) res.status(404).send('User not found')
-    res.send(user)
+})
+   
+
+router.post('/signin' , async (req, res) => {
+    
+    try {
+        const { error } = validateLogin(req.body); 
+        if (error) return res.status(400).send(error.details[0].message);
+
+        let user = await User.findOne({ email: req.body.email });
+        if (!user) return res.status(400).send('Invalid email');
+  
+         
+        if (await bcrypt.compare(req.body.password, user.password)) {
+            //res.send('Success')
+
+            //jwt//
+            const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '600s' })
+            auth
+            res.header('x-access-token', accessToken).status(200).send('Successfully Signed In')
+
+        }
+        else {
+            res.status(403).send('Incorrect Password')
+        }
+    } catch (error) {
+    console.log(error.message)    
+    res.status(500).send()
+    }
+
+})
+ 
+router.get('/signout' , async (req, res) => {
+    
+  
+        res.header('x-access-token', '', { maxAge: 1}).status(200).send('Signed Out')
+        
 })
 
-
-router.delete('/:id', async (req, res) => {
-
-    const user = await User.findByIdAndRemove(req.params.id);
-    
-    if(!user) return res.status(404).send('User not found')
-
-    res.send(user)
-
-})
 
 module.exports = router;

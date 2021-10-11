@@ -1,3 +1,4 @@
+require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
 const users = require('./routes/users')
@@ -10,8 +11,5 @@ mongoose.connect('mongodb://localhost/food')
 app.use(express.json()) 
 app.use('/api/users',users);
 
-app.get('/' , (req, res) => {
-    res.send('Hello Food');
-})
 
 app.listen(3000)
