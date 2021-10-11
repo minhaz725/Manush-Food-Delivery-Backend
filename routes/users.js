@@ -50,9 +50,9 @@ router.post('/signin' , async (req, res) => {
             //res.send('Success')
 
             //jwt//
-            const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '600s' })
-            auth
-            res.header('x-access-token', accessToken).status(200).send('Successfully Signed In')
+            const accessToken = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: '600s' })
+            res.cookie('jwt', accessToken , { httpOnly:true }).status(200).send('Successfully Signed In')
+            //console.log(res.cookie)
 
         }
         else {
@@ -68,7 +68,7 @@ router.post('/signin' , async (req, res) => {
 router.get('/signout' , async (req, res) => {
     
   
-        res.header('x-access-token', '', { maxAge: 1}).status(200).send('Signed Out')
+        res.cookie('jwt', '', { maxAge: 1}).status(200).send('Signed Out')
         
 })
 
