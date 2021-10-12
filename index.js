@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const users = require('./routes/users')
 const items = require('./routes/items')
+const orders = require('./routes/orders')
 var cookieParser = require('cookie-parser')
 
 const app = express()
@@ -15,6 +16,7 @@ mongoose.connect('mongodb://localhost/food')
 app.use(express.json()) 
 app.use('/api/users',users);
 app.use('/api/items',items);
+app.use('/api/orders',orders);
 
 
 app.listen(3000)
