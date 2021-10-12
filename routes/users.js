@@ -5,6 +5,20 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User, validate, validateLogin} = require('../models/user')
 
+
+router.get('/' ,auth, async (req, res) => {
+    const users = await User.find().sort('name');
+    res.send(users);
+})
+
+router.get('/:id' ,auth, async (req, res) => {
+   const user = await User.findById(req.params.id);
+   if(!user) return res.status(404).send('User not found')
+   else res.send(user);
+})
+
+
+
 router.post('/signup' , async (req, res) => {
     
     //console.log(req.body)
@@ -12,6 +26,7 @@ router.post('/signup' , async (req, res) => {
     
     try {
 
+    
         const { error } = validate(req.body); 
         if (error) return res.status(400).send(error.details[0].message);
 
@@ -26,7 +41,7 @@ router.post('/signup' , async (req, res) => {
             password
         })
         console.log('User created: ' ,user)
-        res.status(200).send()
+        res.status(200).send('Successfully Signed Up!')
     } catch (error) {
         console.log(error)
         return res.status(400).send("Bad req")

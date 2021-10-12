@@ -1,22 +1,14 @@
 require('dotenv').config()
-const mongoose = require('mongoose')
 const express = require('express')
-const users = require('./routes/users')
-const items = require('./routes/items')
-const orders = require('./routes/orders')
 var cookieParser = require('cookie-parser')
-
 const app = express()
+
 app.use(cookieParser())
+app.use(express.json())
 
-mongoose.connect('mongodb://localhost/food')
-    .then(() => console.log('Connected to MongoDB. '))
-    .catch(err => console.error('Could not connect to MongoDB'));
-
-app.use(express.json()) 
-app.use('/api/users',users);
-app.use('/api/items',items);
-app.use('/api/orders',orders);
+require('./startup/db')()
+require('./startup/routes')(app)
 
 
-app.listen(3000)
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`App runnung in mode : ${ process.env.NODE_ENV} \n Listening on port ${port}...`));

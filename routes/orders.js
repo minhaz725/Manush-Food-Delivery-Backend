@@ -4,6 +4,7 @@ const { Order, validate} = require('../models/order')
 const auth = require('../middlewares/auth')
 const { User } = require('../models/user');
 const { exist } = require('joi');
+const { Item } = require('../models/item');
 
 router.get('/' ,auth, async (req, res) => {
     const orders = await Order.find().sort('name');
@@ -18,11 +19,22 @@ router.get('/:id' ,auth, async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
         
-     //const {error} = validate(req.body)
-     //if(error) return res.status(400).send(error.details[0].message);
      
+    ///order validity check///
+     let validItems = [];
+     for( var i=0; i < req.body.orders.orderedItems.length; i++)
+     {
+        let item = await Item.findOne({ "name" : req.body.orders.orderedItems[i].name });
+        if(item) validItems.push(item)
+     }
+     if(validItems.length === 0) return res.status(400).send("Invalid order, please try again")
+    
+     req.body.orders.orderedItems = validItems
+    
+    
     let existingOrder = await Order.findOne({ "userName._id" : req.user });
     
+    ///for old user
     if (existingOrder) {
         
         const orderedItems = req.body.orders.orderedItems
@@ -40,7 +52,7 @@ router.post('/', auth, async (req, res) => {
     }
    
 
-
+    ///for new user
     let user = await User.findById(req.user);
     const orderedItems = req.body.orders.orderedItems
     var totalPrice = calculatePrice(orderedItems)
@@ -54,7 +66,8 @@ router.post('/', auth, async (req, res) => {
         totalSpendings: totalPrice
     });
     order = await order.save()
-    res.status(200).send(order);
+    receipt = summary( order)
+    return res.status(200).send(receipt);
 });
 
 router.put('/:id',auth, async (req, res) => {

@@ -2,8 +2,6 @@ const jwt = require('jsonwebtoken');
 
 module.exports = async function (req, res, next) {
 
-    
-    //console.log('Cookies: ', req.signedCookies)
 
   var token = await req.cookies.jwt
   

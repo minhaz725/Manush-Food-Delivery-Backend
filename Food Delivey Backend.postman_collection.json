@@ -1,0 +1,467 @@
+{
+	"info": {
+		"_postman_id": "90ab8ab3-1b6a-4582-8e63-33efee0a7665",
+		"name": "Food Delivey Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "SignUp User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"Minhazur\",\r\n    \"email\" : \"minhaz725@gmail.com\",\r\n    \"password\" : \"123xyz\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"signup"
+					]
+				},
+				"description": "This api is used for signing up new users"
+			},
+			"response": [
+				{
+					"name": "SignUp User",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY0NmJhNTQxM2Y1Y2UyMmE3MTFiMTAiLCJpYXQiOjE2MzM5ODMwODgsImV4cCI6MTYzMzk4MzY4OH0.AZEGLxu_1Id42H2XDFja5pqiNurEGUhu_tiCLAoETa8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Minhazur\",\r\n    \"email\" : \"minhaz725@gmail.com\",\r\n    \"password\" : \"123xyz\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"signin"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [],
+					"cookie": [],
+					"body": "Successfully Signed Up!"
+				}
+			]
+		},
+		{
+			"name": "SignIn User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\" : \"minhaz725@gmail.com\",\r\n    \"password\" : \"123xyz\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"signin"
+					]
+				},
+				"description": "This api is used for signing in an existing user. Signed users will get a jwt token cookie which will last for 10 mins."
+			},
+			"response": [
+				{
+					"name": "SignIn User",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"minhaz725@gmail.com\",\r\n    \"password\" : \"123xyz\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"signin"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "Successfully Signed In"
+				}
+			]
+		},
+		{
+			"name": "Get All Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				},
+				"description": "This api will return list of all users to a signed in user."
+			},
+			"response": [
+				{
+					"name": "Get All Users",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY0NmJhNTQxM2Y1Y2UyMmE3MTFiMTAiLCJpYXQiOjE2MzM5ODMwODgsImV4cCI6MTYzMzk4MzY4OH0.AZEGLxu_1Id42H2XDFja5pqiNurEGUhu_tiCLAoETa8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[\r\n    {\r\n        \"_id\": \"6165a850245b7d0ab33a2e24\",\r\n        \"name\": \"Minhazur\",\r\n        \"email\": \"minhaz725@gmail.com\",\r\n        \"password\": \"$2b$10$kkCmniPNgWyOw3AOte8uqOsfYp0101FBYom3LPXSTVhAsQLsdr/nm\",\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61646ba5413f5ce22a711b10\",\r\n        \"name\": \"minhaz\",\r\n        \"email\": \"min@haz\",\r\n        \"password\": \"$2b$10$WysUTPKVA2zlYUdf0pM7nO.OSqlZhz8YwylAoQMBoW3Q8ei0g4iX6\",\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"6164521541feb38c1167c12f\",\r\n        \"name\": \"pornonob\",\r\n        \"email\": \"pot@das\",\r\n        \"password\": \"$2b$10$kFSGlGICGp.6LcjEMoMyKefck5MjPgI27gvF0Y.bozZLo8sjmpOpq\",\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61644fc98f1594ced4c81be6\",\r\n        \"name\": \"pronob\",\r\n        \"email\": \"p@das\",\r\n        \"password\": \"$2b$10$n8LdLZ.sFdhLBcR8R8Yl9eiBQpUUfBSmnwDYZHQ8ury.Apt7eY9Zu\",\r\n        \"__v\": 0\r\n    }\r\n]"
+				}
+			]
+		},
+		{
+			"name": "Get All Items",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"items"
+					]
+				},
+				"description": "This api will return list of all available items to a signed in user."
+			},
+			"response": [
+				{
+					"name": "Get All Items",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY0NmJhNTQxM2Y1Y2UyMmE3MTFiMTAiLCJpYXQiOjE2MzM5ODMwODgsImV4cCI6MTYzMzk4MzY4OH0.AZEGLxu_1Id42H2XDFja5pqiNurEGUhu_tiCLAoETa8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"p@das\",\r\n    \"password\" : \"aaass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "[\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4a9\",\r\n        \"name\": \"Beef Chilli\",\r\n        \"type\": \"Meal\",\r\n        \"price\": 20,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4ad\",\r\n        \"name\": \"Faluda\",\r\n        \"type\": \"Dessert\",\r\n        \"price\": 15,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4ab\",\r\n        \"name\": \"Fish Curry\",\r\n        \"type\": \"Meal\",\r\n        \"price\": 20,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4a6\",\r\n        \"name\": \"Fried Chicken\",\r\n        \"type\": \"Appetizer\",\r\n        \"price\": 15,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4a8\",\r\n        \"name\": \"Fried Rice\",\r\n        \"type\": \"Meal\",\r\n        \"price\": 20,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4aa\",\r\n        \"name\": \"Honey Chicken\",\r\n        \"type\": \"Meal\",\r\n        \"price\": 15,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4ac\",\r\n        \"name\": \"Ice-cream\",\r\n        \"type\": \"Dessert\",\r\n        \"price\": 10,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4a7\",\r\n        \"name\": \"Salad\",\r\n        \"type\": \"Appetizer\",\r\n        \"price\": 15,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4ae\",\r\n        \"name\": \"Soft Drinks\",\r\n        \"type\": \"Drinks\",\r\n        \"price\": 5,\r\n        \"__v\": 0\r\n    },\r\n    {\r\n        \"_id\": \"61653883fae276448ac0b4a5\",\r\n        \"name\": \"Soup\",\r\n        \"type\": \"Appetizer\",\r\n        \"price\": 10,\r\n        \"__v\": 0\r\n    }\r\n]"
+				}
+			]
+		},
+		{
+			"name": "Place Order",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orders\" :\r\n       { \"orderedItems\" : \r\n        [\r\n            {\r\n                \"name\" : \"soup\"\r\n            },\r\n            {\r\n                \"name\" : \"salad\"\r\n            },\r\n            {\r\n                \"name\" : \"Fried Rice\"\r\n            }\r\n        ]\r\n       }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"orders"
+					]
+				},
+				"description": "After selecting some food items and sending them as JSON req, this api will return an order receipt to a signed in user."
+			},
+			"response": [
+				{
+					"name": "Place Order",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY0NmJhNTQxM2Y1Y2UyMmE3MTFiMTAiLCJpYXQiOjE2MzM5ODMwODgsImV4cCI6MTYzMzk4MzY4OH0.AZEGLxu_1Id42H2XDFja5pqiNurEGUhu_tiCLAoETa8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orders\" :\r\n       { \"orderedItems\" : \r\n        [\r\n            {\r\n                \"name\" : \"soup\"\r\n            },\r\n            {\r\n                \"name\" : \"salad\"\r\n            },\r\n            {\r\n                \"name\" : \"Fried Rice\"\r\n            }\r\n        ]\r\n       }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/orders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"orders"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"OrderID\": \"6165ae7603905d7079d55517\",\r\n    \"CustomerName\": \"Minhazur\",\r\n    \"CustomerEmail\": \"minhaz725@gmail.com\",\r\n    \"ItemList\": [\r\n        {\r\n            \"name\": \"Fried Rice\",\r\n            \"type\": \"Meal\",\r\n            \"price\": 20,\r\n            \"_id\": \"61653883fae276448ac0b4a8\",\r\n            \"__v\": 0\r\n        }\r\n    ],\r\n    \"GrossTotal\": 20,\r\n    \"OrderTime\": \"2021-10-12T15:49:10.116Z\",\r\n    \"LifeTimeSpends\": 40,\r\n    \"LifeTimeOrders\": 2\r\n}"
+				}
+			]
+		},
+		{
+			"name": "SignOut",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/users/signout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"users",
+						"signout"
+					]
+				},
+				"description": "This api will destroy jwt token cookie and make user logout from server."
+			},
+			"response": [
+				{
+					"name": "SignOut",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "jwt",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MTY0NmJhNTQxM2Y1Y2UyMmE3MTFiMTAiLCJpYXQiOjE2MzM5ODMwODgsImV4cCI6MTYzMzk4MzY4OH0.AZEGLxu_1Id42H2XDFja5pqiNurEGUhu_tiCLAoETa8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"p@das\",\r\n    \"password\" : \"aaass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/signout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"signout"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": "Signed Out"
+				}
+			]
+		}
+	]
+}
