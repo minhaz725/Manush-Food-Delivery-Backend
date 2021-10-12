@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { Order, validate} = require('../models/order')
 const auth = require('../middlewares/auth')
-const { User } = require('../models/user')
+const { User } = require('../models/user');
+const { exist } = require('joi');
 
 router.get('/' ,auth, async (req, res) => {
     const orders = await Order.find().sort('name');
@@ -20,25 +21,37 @@ router.post('/', auth, async (req, res) => {
      //const {error} = validate(req.body)
      //if(error) return res.status(400).send(error.details[0].message);
      
-    let od = await Order.findOne({ "userName._id" : req.user });
+    let existingOrder = await Order.findOne({ "userName._id" : req.user });
     
-    if (od) {
+    if (existingOrder) {
         
-        od.orderedItems = od.orderedItems.concat(req.body.orderedItems)
-        od.totalPrice = calculatePrice(od.orderedItems)
-        await od.save()
-        return res.status(200).send(od);
+        const orderedItems = req.body.orders.orderedItems
+        newTotalPrice = calculatePrice(orderedItems)
+        req.body.orders.totalPrice = newTotalPrice
+
+        existingOrder.orders = existingOrder.orders.concat(req.body.orders)
+        existingOrder.totalSpendings = existingOrder.totalSpendings + newTotalPrice 
+        existingOrder.totalOrders = existingOrder.totalOrders  + 1
+        await existingOrder.save()
+        //console.log(summary( existingOrder , req.body.orders ))
+        receipt = summary( existingOrder)
+        return res.status(200).send(receipt);
       
     }
    
 
 
     let user = await User.findById(req.user);
-    var totalPrice = calculatePrice(req.body.orderedItems)
-    let order = new Order ({
+    const orderedItems = req.body.orders.orderedItems
+    var totalPrice = calculatePrice(orderedItems)
+    let order = await new Order ({
         userName: user,
-        orderedItems: req.body.orderedItems,
-        totalPrice: totalPrice
+        orders: {
+                    orderedItems : orderedItems,
+                    totalPrice : totalPrice
+                },
+        totalOrders: 1,
+        totalSpendings: totalPrice
     });
     order = await order.save()
     res.status(200).send(order);
@@ -77,6 +90,23 @@ function calculatePrice(orderedItems)
     }
     return totalPrice
 
+}
+
+function summary(order)
+{
+    index = order.__v
+    return receipt =  
+    { 
+        OrderID: order.orders[index]._id,
+        CustomerName : order.userName.name ,
+        CustomerEmail : order.userName.email,
+        ItemList : order.orders[index].orderedItems,
+        GrossTotal : order.orders[index].totalPrice,
+        OrderTime: order.orders[index].date,
+        LifeTimeSpends : order.totalSpendings,
+        LifeTimeOrders : order.totalOrders
+
+    }
 }
 
 module.exports = router;

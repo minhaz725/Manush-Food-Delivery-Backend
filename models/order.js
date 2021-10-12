@@ -9,14 +9,28 @@ const orderSchema = new Schema({
     userName: {
         type: userSchema
     },
-    orderedItems: [{
-        type: itemSchema,
-        required: true,
-        minlength: 1,
+    orders : [{
+        orderedItems: [{
+            type: itemSchema,
+            required: true,
+            minlength: 1,
+        }],
+        totalPrice: {
+            type: Number,
+            min: 1,
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        }
+
     }] ,
-    totalPrice: {
+    totalOrders: {
         type: Number,
-        min: 1,
+        min: 0,
+    },
+    totalSpendings: {
+        type: Number,
     }
 
 });
