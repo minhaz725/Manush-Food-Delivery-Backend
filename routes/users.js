@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { User, validate, validateLogin} = require('../models/user')
 
-router.post('/signup' ,auth, async (req, res) => {
+router.post('/signup' , async (req, res) => {
     
     //console.log(req.body)
     

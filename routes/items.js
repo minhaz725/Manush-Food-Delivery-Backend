@@ -1,51 +1,54 @@
 const express = require('express');
 const router = express.Router();
-const { User, validate} = require('../models/user')
+const { Item, validate} = require('../models/item')
+const auth = require('../middlewares/auth')
 
-router.get('/' , async (req, res) => {
-    const users = await User.find().sort('name');
-    res.send(users);
+router.get('/' ,auth, async (req, res) => {
+    const items = await Item.find().sort('name');
+    res.send(items);
 })
 
-router.get('/:id' , async (req, res) => {
-   const user = await User.findById(req.params.id);
-   if(!user) return res.status(404).send('User not found')
-   else res.send(user);
+router.get('/:id' ,auth, async (req, res) => {
+   const item = await Item.findById(req.params.id);
+   if(!item) return res.status(404).send('Item not found')
+   else res.send(item);
 })
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
         
      const {error} = validate(req.body)
      if(error) return res.status(400).send(error.details[0].message);
 
-    let user = new User ({
-        name: req.body.name 
+    let item = new Item ({
+        name: req.body.name,
+        type: req.body.type,
+        price: req.body.price
     });
-    user = await user.save()
-    res.send(user);
+    item = await item.save()
+    res.send(item);
 });
 
-router.put('/:id', async (req, res) => {
+router.put('/:id',auth, async (req, res) => {
 
     const {error} = validate(req.body)
     if(error) return res.status(400).send(error.details[0].message);
 
-    const user = await User.findByIdAndUpdate(req.params.id, { name: req.body.name}, {
+    const item = await Item.findByIdAndUpdate(req.params.id, { name: req.body.name}, {
         new: true
     });
     
-    if(!user) res.status(404).send('User not found')
-    res.send(user)
+    if(!item) res.status(404).send('Item not found')
+    res.send(item)
 })
 
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',auth, async (req, res) => {
 
-    const user = await User.findByIdAndRemove(req.params.id);
+    const item = await Item.findByIdAndRemove(req.params.id);
     
-    if(!user) return res.status(404).send('User not found')
+    if(!item) return res.status(404).send('Item not found')
 
-    res.send(user)
+    res.send(item)
 
 })
 

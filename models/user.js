@@ -46,12 +46,6 @@ function validateUserLogin(user) {
     return schema.validate(user);
 }
 
-userSchema.methods.generateAuthToken = function() { 
-    const token = jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get('jwtPrivateKey'));
-    return token;
-}
-  
-
 exports.User = User;
 exports.validate = validateUser;
 exports.validateLogin = validateUserLogin;
